@@ -1,0 +1,16 @@
+.pagination {
+  justify-content: center;
+  list-style-type: none;
+
+  display: flex;
+}
+.pagination li {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.pagination li.active {
+  color: rgb(255, 255, 255);
+  background-color: rgb(25, 118, 210);
+  border-radius: 16px;
+}

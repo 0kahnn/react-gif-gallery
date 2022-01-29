@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect } from "react";
+import "./App.css";
+import Index from "./Views/Index/Index";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+//redux
+import { connect, Provider } from "react-redux";
+import store from "./store/store.js";
+import { loadGifs } from "./store/actions/gifsAction";
+
+function App({ gifsData }) {
+  //load user on page load
+  useEffect(() => {
+    store.dispatch(loadGifs());
+
+    let interval = 0;
+    if (gifsData.autoFetch) {
+      console.log("gifsData.autoFetch", gifsData.autoFetch);
+      interval = setInterval(function () {
+        store.dispatch(loadGifs());
+      }, 5000);
+      return () => clearInterval(interval);
+    }
+  }, [gifsData.autoFetch]);
+  return <Index />;
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    gifsData: state.gifs,
+  };
+};
+
+export default connect(mapStateToProps)(App);
