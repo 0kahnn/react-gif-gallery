@@ -13,10 +13,11 @@ export const loadGifs = (data) => {
     dispatch({
       type: LOADING,
     });
+    let randomOffset = Math.ceil(Math.random() * (4999 - 25) + 25);
 
     axios({
       method: "get",
-      url: `http://api.giphy.com/v1/gifs/trending?api_key=${process.env.REACT_APP_API_KEY}`,
+      url: `/v1/gifs/trending?api_key=${process.env.REACT_APP_API_KEY}&offset=${randomOffset}`,
     })
       .then((response) => {
         dispatch({
@@ -41,7 +42,7 @@ export const searchGifs = (query) => {
 
     axios({
       method: "get",
-      url: `http://api.giphy.com/v1/gifs/search?api_key=${process.env.REACT_APP_API_KEY}&q=${query}`,
+      url: `/v1/gifs/search?api_key=${process.env.REACT_APP_API_KEY}&q=${query}`,
     })
       .then((response) => {
         dispatch({

@@ -6,6 +6,12 @@ import Index from "./Views/Index/Index";
 import { connect, Provider } from "react-redux";
 import store from "./store/store.js";
 import { loadGifs } from "./store/actions/gifsAction";
+import axios from "axios";
+
+// axios
+//axios base url
+const baseURL = "//api.giphy.com";
+axios.defaults.baseURL = baseURL;
 
 function App({ gifsData }) {
   //load user on page load
@@ -14,7 +20,6 @@ function App({ gifsData }) {
 
     let interval = 0;
     if (gifsData.autoFetch) {
-      console.log("gifsData.autoFetch", gifsData.autoFetch);
       interval = setInterval(function () {
         store.dispatch(loadGifs());
       }, 5000);
